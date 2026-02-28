@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>📋 Tutor Complaint Panel</h2>
+
+<table class="complaint-table">
+
+    <tr>
+        <th>Student</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    {% for complaint in complaints %}
+    <tr>
+        <td>{{ complaint.student.username }}</td>
+        <td>{{ complaint.title }}</td>
+        <td>{{ complaint.description }}</td>
+
+        <td>
+            <span class="status submitted">
+                Submitted
+            </span>
+        </td>
+
+        <td>
+            <a href="/complaints/approve/{{ complaint.id }}/"
+               class="approve-btn">Approve</a>
+
+            <a href="/complaints/reject/{{ complaint.id }}/"
+               class="reject-btn">Reject</a>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}

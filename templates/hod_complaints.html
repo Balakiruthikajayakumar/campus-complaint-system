@@ -1,0 +1,27 @@
+<h2>HOD Complaints</h2>
+
+<table border="1">
+<tr>
+<th>Title</th>
+<th>Description</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+{% for complaint in complaints %}
+<tr>
+<td>{{ complaint.title }}</td>
+<td>{{ complaint.description }}</td>
+<td>{{ complaint.status }}</td>
+
+<td>
+<a href="/complaints/hod/approve/{{ complaint.id }}/"
+class="approve-btn">Approve</a>
+
+<a href="/complaints/hod/reject/{{ complaint.id }}/"
+class="reject-btn">Reject</a>
+</td>
+
+</tr>
+{% endfor %}
+</table>

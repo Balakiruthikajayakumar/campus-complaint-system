@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>🔎 Lost & Found</h2>
+
+<a href="{% url 'add_item' %}">
+    <button>Add Item</button>
+</a>
+
+<hr>
+
+{% for item in items %}
+
+<div class="complaint-box">
+
+    <h3>{{ item.title }}</h3>
+
+    <p>{{ item.description }}</p>
+
+    <p>
+        Status :
+        <span class="status {{ item.status }}">
+            {{ item.status|title }}
+        </span>
+    </p>
+
+    {% if item.image %}
+        <img src="{{ item.image.url }}" width="200">
+    {% endif %}
+
+    <!-- OWNER -->
+    <p><b>Posted by:</b> {{ item.user.username }}</p>
+
+    <!-- CLAIMED USER -->
+    {% if item.claimed_by %}
+        <p><b>Claimed by:</b> {{ item.claimed_by.username }}</p>
+    {% endif %}
+
+    <!-- ===============================
+         CLAIM REQUEST SYSTEM
+    =============================== -->
+
+    <!-- REQUEST CLAIM -->
+    {% if item.status != "claimed"
+          and item.user != user
+          and not item.claim_requested_by %}
+        <a href="{% url 'request_claim' item.id %}">
+            <button>Request Claim</button>
+        </a>
+    {% endif %}
+
+    <!-- REQUEST SENT MESSAGE -->
+    {% if item.claim_requested_by and item.user != user %}
+        <p style="color:orange;"><b>Claim Requested</b></p>
+    {% endif %}
+
+    <!-- OWNER APPROVAL -->
+    {% if item.claim_requested_by and item.user == user %}
+        <p>
+            Claim request from:
+            <b>{{ item.claim_requested_by.username }}</b>
+        </p>
+
+        <a href="{% url 'approve_claim' item.id %}">
+            <button>Approve Claim</button>
+        </a>
+    {% endif %}
+
+</div>
+
+{% empty %}
+<p>No items available.</p>
+{% endfor %}
+
+{% endblock %}

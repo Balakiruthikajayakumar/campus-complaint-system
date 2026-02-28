@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Campus System</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+
+    <!-- ☰ Hamburger -->
+    <span class="menu-btn" onclick="toggleMenu()">☰</span>
+
+    <!-- Center Title -->
+    <h2 class="brand-title">Smart Campus Complaint System</h2>
+
+</header>
+
+
+<!-- ================= SIDEBAR ================= -->
+<div id="sidebar" class="sidebar">
+
+    <a href="/">🏠 Home</a>
+    <a href="#">ℹ About</a>
+    <a href="#">👤 Profile</a>
+    <a href="#">📞 Contact</a>
+    <a href="#">❓ Help</a>
+
+</div>
+
+
+<!-- ================= MAIN SECTION ================= -->
+<div class="home-section">
+
+    <h1>Welcome to Smart Campus</h1>
+
+    <p>
+        Raise complaints, track approvals and resolve campus issues
+        through an intelligent digital platform.
+    </p>
+
+    <div class="home-buttons">
+        <a href="/login/" class="btn">Login</a>
+        <a href="/register/" class="btn secondary">Register</a>
+    </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+
+    <p>
+        © 2026 Smart Campus System |
+        Developed for Academic Innovation & Digital Campus Management
+    </p>
+
+</footer>
+
+
+<!-- ================= SCRIPT ================= -->
+<script>
+function toggleMenu() {
+    document.getElementById("sidebar")
+        .classList.toggle("active");
+}
+</script>
+
+</body>
+</html>
