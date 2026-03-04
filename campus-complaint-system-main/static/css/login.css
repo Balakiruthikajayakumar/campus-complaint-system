@@ -1,0 +1,126 @@
+/* ============================= */
+/* BODY BACKGROUND */
+/* ============================= */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    height: 100vh;
+
+    background: linear-gradient(135deg, #7095db, #4b7cd1);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ============================= */
+/* LOGIN CARD */
+/* ============================= */
+form {
+    background: #ffffff;
+    width: 380px;
+    padding: 40px;
+    border-radius: 12px;
+
+    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.25);
+
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+/* ============================= */
+/* HEADING */
+/* ============================= */
+h2 {
+    position: absolute;
+    top: 80px;
+    color: white;
+    font-size: 30px;
+    letter-spacing: 1px;
+}
+
+/* ============================= */
+/* LABEL */
+/* ============================= */
+label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* ============================= */
+/* INPUT FIELDS */
+/* ============================= */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    outline: none;
+    transition: 0.3s;
+}
+
+/* Focus Effect */
+input:focus {
+    border-color: #2a5298;
+    box-shadow: 0px 0px 8px rgba(42, 82, 152, 0.4);
+}
+
+/* ============================= */
+/* BUTTON */
+/* ============================= */
+button {
+    width: 100%;
+    padding: 12px;
+
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    border: none;
+    border-radius: 6px;
+
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Hover Effect */
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================= */
+/* FORGOT PASSWORD */
+/* ============================= */
+a {
+    position: absolute;
+    bottom: 60px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ============================= */
+/* ANIMATION */
+/* ============================= */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
