@@ -1,0 +1,121 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Campus Complaint System</title>
+    <link rel="stylesheet" href="{% static 'css/leave_style.css' %}">
+</head>
+
+<body>
+
+<header class="header">
+    <h2>SMART CAMPUS COMPLAINT SYSTEM</h2>
+
+    <div class="user-section">
+        <div>{{ request.user.username }} | Tutor</div>
+        <button class="back-btn" onclick="goBack()">← Back</button>
+    </div>
+</header>
+
+<div class="sidebar">
+    <a href="#">Profile 👤</a>
+    <a href="#">Logout 🚪</a>
+</div>
+
+<div class="main">
+
+    <h2>LEAVE FORM VERIFICATION</h2>
+
+    <div class="filter-buttons">
+        <button onclick="filterLeave('All')">All</button>
+        <button onclick="filterLeave('submitted')">Pending</button>
+        <button onclick="filterLeave('tutor_approved')">Approved</button>
+        <button onclick="filterLeave('hod_approved')">Forwarded</button>
+        <button onclick="filterLeave('rejected')">Rejected</button>
+    </div>
+
+    <input type="text" id="search" placeholder="Search student...">
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Student</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody id="leaveBody">
+
+        {% for leave in leaves %}
+
+            <tr>
+                <td>LV{{ leave.id }}</td>
+                <td>{{ leave.name }}</td>
+                <td>{{ leave.from_date }}</td>
+                <td>{{ leave.to_date }}</td>
+                <td>{{ leave.purpose }}</td>
+
+                <td>
+                    <span class="status {{ leave.status }}">
+                        {{ leave.status }}
+                    </span>
+                </td>
+
+                <td>
+
+                {% if leave.status == "submitted" %}
+
+                    <a href="{% url 'tutor_approve' leave.id %}">
+                        <button class="approve">Approve</button>
+                    </a>
+
+                    <a href="{% url 'tutor_reject' leave.id %}">
+                        <button class="reject">Reject</button>
+                    </a>
+
+                {% elif leave.status == "tutor_approved" %}
+
+                    <span>Forwarded to HOD</span>
+
+                {% elif leave.status == "hod_approved" %}
+
+                    <span>Forwarded to Deputy Warden</span>
+
+                {% elif leave.status == "deputy_approved" %}
+
+                    <span>Forwarded to Associate Warden</span>
+
+                {% elif leave.status == "warden_approved" %}
+
+                    <span>Approved</span>
+
+                {% endif %}
+
+                </td>
+            </tr>
+
+        {% empty %}
+
+            <tr>
+                <td colspan="7">No Leave Requests Found</td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<script src="{% static 'js/leave_script.js' %}"></script>
+
+</body>
+</html>

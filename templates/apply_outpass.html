@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Outpass Request - Smart Campus</title>
+
+<link rel="stylesheet" href="{% static 'css/apply_outpass.css' %}">
+
+</head>
+
+<body>
+
+<div class="header">🎓 Smart Campus</div>
+
+<div class="container">
+
+<h2>Outpass Request Form</h2>
+
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+
+<label>Student Name</label>
+<input type="text" name="name" value="{{ request.user.username }}" placeholder="Enter your name" readonly>
+
+<label>Register Number</label>
+<input type="text" name="register_number" value="{{ request.user.register_number }}" placeholder="Enter register number">
+
+<label>Department</label>
+<select name="department">
+<option>Select Department</option>
+<option>CSE</option>
+<option>ECE</option>
+<option>EEE</option>
+<option>MECH</option>
+<option>CIVIL</option>
+</select>
+
+<label>Year</label>
+<select name="year">
+<option>Select Year</option>
+<option>1st Year</option>
+<option>2nd Year</option>
+<option>3rd Year</option>
+<option>4th Year</option>
+</select>
+
+<!-- Contact + Confirmed -->
+
+<div class="row">
+
+<div>
+<label>Parent's Contact Number</label>
+<input type="tel" name="parent_phone" placeholder="Enter parent's phone number">
+</div>
+
+<div>
+<label>Confirmed With</label>
+<select name="confirmed_with">
+<option>Select</option>
+<option>Mother</option>
+<option>Father</option>
+<option>Guardian</option>
+</select>
+</div>
+
+</div>
+
+<!-- OUT DATE + TIME -->
+
+<div class="row">
+
+<div>
+<label>Out Date</label>
+<input type="date" name="from_date" required>
+</div>
+
+<div>
+<label>Out Time</label>
+<input type="time" name="out_time">
+</div>
+
+</div>
+
+<!-- RETURN DATE + TIME -->
+
+<div class="row">
+
+<div>
+<label>Return Date</label>
+<input type="date" name="to_date" required>
+</div>
+
+<div>
+<label>In Time</label>
+<input type="time" name="in_time">
+</div>
+
+</div>
+
+<label>Reason for Outpass</label>
+<textarea name="reason" placeholder="Enter reason"></textarea>
+
+<label>Upload Leave Form (Image / PDF)</label>
+<input type="file" name="leave_proof" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx">
+
+<button type="submit">Submit Request</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

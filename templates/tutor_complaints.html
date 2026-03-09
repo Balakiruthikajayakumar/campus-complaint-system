@@ -34,6 +34,12 @@
                class="reject-btn">Reject</a>
         </td>
     </tr>
+    {% if complaint.complaint_type == "anonymous" %}
+Anonymous
+{% else %}
+{{ complaint.student.username }}
+{% endif %}
+
     {% endfor %}
 
 </table>

@@ -1,9 +1,17 @@
-<h1>Principal Homepage</h1>
+{% extends "base.html" %}
+{% load static %}
 
-<a href="/complaints/principal/">
-View Complaints
-</a>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/principal_homepage.css' %}">
+{% endblock %}
 
-<br><br>
-
-<a href="/logout/">Logout</a>
+{% block content %}
+<div class="principal-container">
+    <h1>🏛️ Principal Dashboard</h1>
+    
+    <div class="links">
+        <a href="{% url 'principal_complaints' %}" class="btn view-btn">📋 View Complaints</a>
+        <a href="{% url 'logout' %}" class="btn logout-btn">Logout</a>
+    </div>
+</div>
+{% endblock %}

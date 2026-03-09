@@ -1,0 +1,332 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>My Requests</title>
+
+<!-- Load external CSS -->
+<link rel="stylesheet" href="{% static 'css/my_requests.css' %}">
+
+<script>
+
+/* ------------------------------------------------
+TAB SWITCHING FUNCTION
+Switch between Complaints / Leaves / Outpasses
+------------------------------------------------*/
+function showSection(section){
+
+document.getElementById("complaints").style.display="none";
+document.getElementById("leaves").style.display="none";
+document.getElementById("outpasses").style.display="none";
+
+document.getElementById(section).style.display="block";
+
+}
+
+
+/* ------------------------------------------------
+SHOW / HIDE PROGRESS TRACKER
+Triggered when Track Status button is clicked
+------------------------------------------------*/
+function showProgress(id){
+
+// Hide all trackers first
+let trackers = document.querySelectorAll("[id^='progress-']");
+trackers.forEach(function(row){
+row.style.display = "none";
+});
+
+// Show the selected tracker
+let bar = document.getElementById("progress-"+id);
+
+if(bar){
+bar.style.display="table-row";
+}
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+<!-- PAGE TITLE -->
+<h2>My Requests</h2>
+
+
+<!-- ------------------------------------------------
+TAB BUTTONS
+------------------------------------------------ -->
+<div class="tabs">
+
+<div class="tab" onclick="showSection('complaints')">Complaints</div>
+<div class="tab" onclick="showSection('leaves')">Leaves</div>
+<div class="tab" onclick="showSection('outpasses')">Outpasses</div>
+
+</div>
+
+
+<!-- =================================================
+COMPLAINTS SECTION
+================================================= -->
+
+<div id="complaints" class="section active">
+
+<h3>📋 My Complaints</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Complaint</th>
+<th>Category</th>
+<th>Date</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for complaint in complaints %}
+
+<tr>
+
+<td>#CMP{{ complaint.id }}</td>
+<td>{{ complaint.title }}</td>
+<td>{{ complaint.category }}</td>
+<td>{{ complaint.created_at }}</td>
+
+<td>
+<span class="badge 
+{% if complaint.status == 'submitted' %}pending
+{% elif complaint.status == 'tutor_approved' or complaint.status == 'hod_approved' or complaint.status == 'principal_approved' %}progress
+{% elif complaint.status == 'resolved' %}resolved
+{% endif %}
+">
+{{ complaint.status }}
+</span>
+</td>
+
+<td>
+<button class="track-btn" onclick="showProgress('{{ complaint.id }}')">
+Track Status
+</button>
+</td>
+
+</tr>
+
+
+<!-- TRACKER ROW (HIDDEN) -->
+<tr id="progress-{{ complaint.id }}" style="display:none">
+
+<td colspan="6">
+
+<div class="tracker">
+
+<div class="step {% if complaint.status != 'submitted' %}active{% endif %}">
+<div class="circle">1</div>
+<p>Tutor</p>
+</div>
+
+<div class="step {% if complaint.status == 'hod_approved' or complaint.status == 'principal_approved' or complaint.status == 'resolved' %}active{% endif %}">
+<div class="circle">2</div>
+<p>HOD</p>
+</div>
+
+<div class="step {% if complaint.status == 'principal_approved' or complaint.status == 'resolved' %}active{% endif %}">
+<div class="circle">3</div>
+<p>Principal</p>
+</div>
+
+<div class="step {% if complaint.status == 'resolved' %}active{% endif %}">
+<div class="circle">4</div>
+<p>Resolved</p>
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<!-- =================================================
+LEAVE SECTION
+================================================= -->
+
+<div id="leaves" class="section">
+
+<h3>My Leaves</h3>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Reason</th>
+<th>From</th>
+<th>To</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+{% for leave in leaves %}
+
+<tr>
+
+<td>#LV{{ leave.id }}</td>
+<td>{{ leave.reason }}</td>
+<td>{{ leave.from_date }}</td>
+<td>{{ leave.to_date }}</td>
+<td>{{ leave.status }}</td>
+
+<td>
+
+<button class="track-btn" onclick="showProgress('leave{{ leave.id }}')">
+Track Status
+</button>
+
+{% if leave.status == "approved" %}
+<a href="{% url 'download_leave' leave.id %}">
+<button class="download-btn">Download</button>
+</a>
+{% endif %}
+
+</td>
+
+</tr>
+
+
+<!-- LEAVE TRACKER -->
+<tr id="progress-leave{{ leave.id }}" style="display:none">
+
+<td colspan="6">
+
+<div class="tracker">
+
+<div class="step {% if leave.status != 'submitted' %}active{% endif %}">
+<div class="circle">1</div>
+<p>Tutor</p>
+</div>
+
+<div class="step {% if leave.status == 'hod_approved' or leave.status == 'principal_approved' or leave.status == 'approved' %}active{% endif %}">
+<div class="circle">2</div>
+<p>HOD</p>
+</div>
+
+<div class="step {% if leave.status == 'principal_approved' or leave.status == 'approved' %}active{% endif %}">
+<div class="circle">3</div>
+<p>Principal</p>
+</div>
+
+<div class="step {% if leave.status == 'approved' %}active{% endif %}">
+<div class="circle">4</div>
+<p>Approved</p>
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+
+<!-- =================================================
+OUTPASS SECTION
+================================================= -->
+
+<div id="outpasses" class="section">
+
+<h3>My Outpasses</h3>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Reason</th>
+<th>From</th>
+<th>To</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+{% for outpass in outpasses %}
+
+<tr>
+
+<td>#OP{{ outpass.id }}</td>
+<td>{{ outpass.reason }}</td>
+<td>{{ outpass.from_date }}</td>
+<td>{{ outpass.to_date }}</td>
+<td>{{ outpass.status }}</td>
+
+<td>
+
+<button class="track-btn" onclick="showProgress('outpass{{ outpass.id }}')">
+Track Status
+</button>
+
+</td>
+
+</tr>
+
+
+<!-- OUTPASS TRACKER -->
+<tr id="progress-outpass{{ outpass.id }}" style="display:none">
+
+<td colspan="6">
+
+<div class="tracker">
+
+<div class="step {% if outpass.status != 'submitted' %}active{% endif %}">
+<div class="circle">1</div>
+<p>Tutor</p>
+</div>
+
+<div class="step {% if outpass.status == 'hod_approved' or outpass.status == 'principal_approved' or outpass.status == 'approved' %}active{% endif %}">
+<div class="circle">2</div>
+<p>HOD</p>
+</div>
+
+<div class="step {% if outpass.status == 'principal_approved' or outpass.status == 'approved' %}active{% endif %}">
+<div class="circle">3</div>
+<p>Principal</p>
+</div>
+
+<div class="step {% if outpass.status == 'approved' %}active{% endif %}">
+<div class="circle">4</div>
+<p>Approved</p>
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

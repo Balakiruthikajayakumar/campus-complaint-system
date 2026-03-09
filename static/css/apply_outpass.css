@@ -1,0 +1,100 @@
+body{
+font-family: Arial, sans-serif;
+background:#eef2f7;
+margin:0;
+}
+
+/* HEADER */
+
+.header{
+background:#0f2244;
+color:white;
+padding:15px 30px;
+font-size:20px;
+}
+
+/* FORM CONTAINER */
+
+.container{
+width:600px;
+margin:40px auto;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* TITLE */
+
+h2{
+text-align:center;
+margin-bottom:25px;
+}
+
+/* LABEL */
+
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+
+/* INPUT FIELDS */
+
+input,
+select,
+textarea{
+width:100%;
+height:40px;
+padding:8px;
+margin-top:6px;
+border:1px solid #ccc;
+border-radius:5px;
+font-size:14px;
+box-sizing:border-box;
+}
+
+/* TEXTAREA */
+
+textarea{
+height:90px;
+resize:none;
+}
+
+/* TWO COLUMN ROW */
+
+.row{
+display:flex;
+gap:15px;
+}
+
+.row div{
+flex:1;
+}
+
+/* FILE INPUT */
+
+input[type="file"]{
+padding:6px;
+background:#f7f9fc;
+}
+
+/* BUTTON */
+
+button{
+margin-top:25px;
+background:#1a4ed8;
+color:white;
+border:none;
+padding:12px 25px;
+cursor:pointer;
+display:block;
+margin-left:auto;
+margin-right:auto;
+border-radius:5px;
+font-size:15px;
+}
+
+button:hover{
+background:#2f5682;
+}

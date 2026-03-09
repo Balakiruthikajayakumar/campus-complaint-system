@@ -1,5 +1,18 @@
-<h1>HOD Homepage</h1>
+{% extends "base.html" %}
+{% load static %}
 
-<a href="/complaints/hod/">View Complaints</a><br><br>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/hod_homepage.css' %}">
+{% endblock %}
 
-<a href="/logout/">Logout</a>
+{% block content %}
+<div class="hod-homepage-container">
+    <h1>🏛️ HOD Dashboard</h1>
+    <p>Welcome, {{ user.username }}!</p>
+
+    <div class="actions">
+        <a href="{% url 'hod_complaints' %}" class="btn">📋 View Complaints</a>
+        <a href="{% url 'logout' %}" class="btn secondary">🚪 Logout</a>
+    </div>
+</div>
+{% endblock %}

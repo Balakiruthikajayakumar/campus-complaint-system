@@ -1,0 +1,100 @@
+/* =============================
+LEAVE FORM MODULE
+============================= */
+
+body{
+
+font-family:Arial;
+background:#f4f6f9;
+margin:0;
+
+}
+
+/* CONTAINER */
+
+.container{
+
+width:600px;
+margin:60px auto;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+
+}
+
+/* FORM TITLE */
+
+h2{
+
+text-align:center;
+margin-bottom:20px;
+
+}
+
+/* INPUTS */
+
+input, textarea{
+
+width:100%;
+padding:10px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:5px;
+
+}
+
+/* BUTTON */
+
+button{
+
+width:100%;
+padding:12px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:5px;
+
+}
+
+button:hover{
+
+background:#1e40af;
+
+}
+
+/* TABLE */
+
+table{
+
+width:100%;
+border-collapse:collapse;
+
+}
+
+th{
+
+background:#2563eb;
+color:white;
+padding:10px;
+
+}
+
+td{
+
+padding:10px;
+border-bottom:1px solid #ddd;
+
+}
+
+/* DOWNLOAD BUTTON */
+
+.download-btn{
+
+background:green;
+color:white;
+padding:6px 12px;
+text-decoration:none;
+border-radius:5px;
+
+}

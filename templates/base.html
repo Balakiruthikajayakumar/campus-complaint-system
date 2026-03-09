@@ -8,7 +8,8 @@
     <title>Smart Campus System</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
 
 <body>
@@ -20,6 +21,7 @@
     <span class="menu-btn" onclick="toggleSidebar()">☰</span>
 
     <!-- LOGO -->
+    
     <div class="logo">
         🎓 Smart Campus System
     </div>
@@ -62,8 +64,6 @@
             <a href="{% url 'principal_complaints' %}">📋 Complaints</a>
         {% endif %}
 
-        <a href="{% url 'lostfound_home' %}">🎒 Lost & Found</a>
-        <a href="#">📞 Support</a>
 
     {% else %}
         <a href="{% url 'login' %}">Login</a>

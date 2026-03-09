@@ -1,27 +1,31 @@
-<h2>HOD Complaints</h2>
+<div class="hod-complaints-container">
+    <h2>📋 HOD  Complaints</h2>
 
-<table border="1">
-<tr>
-<th>Title</th>
-<th>Description</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-
-{% for complaint in complaints %}
-<tr>
-<td>{{ complaint.title }}</td>
-<td>{{ complaint.description }}</td>
-<td>{{ complaint.status }}</td>
-
-<td>
-<a href="/complaints/hod/approve/{{ complaint.id }}/"
-class="approve-btn">Approve</a>
-
-<a href="/complaints/hod/reject/{{ complaint.id }}/"
-class="reject-btn">Reject</a>
-</td>
-
-</tr>
-{% endfor %}
-</table>
+    {% if complaints %}
+    <table class="complaints-table">
+        <thead>
+            <tr>
+                <th style="width: 15%;">Title</th>
+                <th style="width: 55%;">Description</th>
+                <th style="width: 15%;">Status</th>
+                <th style="width: 15%;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for complaint in complaints %}
+            <tr>
+                <td>{{ complaint.title }}</td>
+                <td class="description">{{ complaint.description }}</td>
+                <td class="status">{{ complaint.status|capfirst }}</td>
+                <td>
+                    <a href="{% url 'approve_hod' complaint.id %}" class="btn resolve-btn">Accept</a>
+                    <a href="{% url 'reject_hod' complaint.id %}" class="btn reject-btn">Reject</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="no-complaints">No complaints to display.</p>
+    {% endif %}
+</div>

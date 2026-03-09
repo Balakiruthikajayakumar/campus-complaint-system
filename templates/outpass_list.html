@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Outpass Requests</title>
+
+<link rel="stylesheet" href="{% static 'css/outpass_list.css' %}">
+
+</head>
+
+<body>
+
+<h2 class="title">Outpass Requests</h2>
+
+<table class="outpass-table">
+
+<tr>
+
+<th>Student</th>
+<th>From Date</th>
+<th>To Date</th>
+<th>Reason</th>
+<th>Status</th>
+<th>Action</th>
+
+</tr>
+
+{% for outpass in outpasses %}
+
+<tr>
+
+<td>{{outpass.student.username}}</td>
+
+<td>{{outpass.from_date}}</td>
+
+<td>{{outpass.to_date}}</td>
+
+<td>{{outpass.reason}}</td>
+
+<td>{{outpass.status}}</td>
+
+<td>
+
+<a href="/outpass/approve/{{outpass.id}}">
+<button class="approve-btn">Approve</button>
+</a>
+
+<a href="/outpass/reject/{{outpass.id}}">
+<button class="reject-btn">Reject</button>
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+
+</html>

@@ -1,26 +1,42 @@
-<h2>Principal Complaints</h2>
+{% extends "base.html" %}
+{% load static %}
 
-<table border="1">
-<tr>
-<th>Title</th>
-<th>Description</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/principal_complaints.css' %}">
+{% endblock %}
 
-{% for complaint in complaints %}
-<tr>
-<td>{{ complaint.title }}</td>
-<td>{{ complaint.description }}</td>
-<td>{{ complaint.status }}</td>
+{% block content %}
+<div class="complaints-container">
+    <h2>📋 Principal Complaints</h2>
 
-<td>
-<a href="/complaints/principal/approve/{{ complaint.id }}/"
-class="approve-btn">Resolve</a>
-
-<a href="/complaints/principal/reject/{{ complaint.id }}/"
-class="reject-btn">Reject</a>
-</td>
-</tr>
-{% endfor %}
-</table>
+    {% if complaints %}
+    <table class="complaints-table">
+        <thead>
+            <tr>
+                <th style="width:20%;">Title</th>
+                <th style="width:50%;">Description</th>
+                <th style="width:15%;">Status</th>
+                <th style="width:15%;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for complaint in complaints %}
+            <tr>
+                <td>{{ complaint.title }}</td>
+                <td>{{ complaint.description }}</td>
+                <td>{{ complaint.status|title }}</td>
+                <td>
+                    <div class="action-buttons">
+                        <a href="/complaints/principal/approve/{{ complaint.id }}/" class="btn approve-btn">Resolve</a>
+                        <a href="/complaints/principal/reject/{{ complaint.id }}/" class="btn reject-btn">Reject</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="no-complaints">No complaints available.</p>
+    {% endif %}
+</div>
+{% endblock %}

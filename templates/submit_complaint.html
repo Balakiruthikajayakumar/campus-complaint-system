@@ -1,7 +1,230 @@
-<h2>Submit Complaint</h2>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit Complaint</button>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Complaint Submission</title>
+
+<link rel="stylesheet" href="{% static 'css/submit_complaint.css' %}">
+
+</head>
+
+<body>
+
+<header>
+<h1>College Complaint Tracking System</h1>
+</header>
+
+<section class="category-section">
+
+<h2>Select Complaint Category</h2>
+
+<div class="cards">
+
+<div class="card" onclick="showForm('college')">
+College Complaints
+</div>
+
+<div class="card" onclick="showForm('hostel')">
+Hostel Complaints
+</div>
+
+<div class="card" onclick="showForm('anonymous')">
+Anonymous Complaints
+</div>
+
+</div>
+
+</section>
+
+<div class="form-container">
+
+<!-- ================================================= -->
+<!-- COLLEGE COMPLAINT FORM -->
+<!-- ================================================= -->
+
+<form id="collegeForm" class="form-box" method="POST" enctype="multipart/form-data">
+
+{% csrf_token %}  <!-- Django security token -->
+
+<h3>College Complaint Form</h3>
+
+<label>Name</label>
+<input type="text" name="name" required>
+
+<label>Register Number</label>
+<input type="text" name="register_number" required>
+
+<label>Gender</label>
+
+<div class="gender-select">
+
+<input type="radio" id="male1" name="gender" value="Male">
+<label for="male1" class="gender-btn">Male</label>
+
+<input type="radio" id="female1" name="gender" value="Female">
+<label for="female1" class="gender-btn">Female</label>
+
+</div>
+
+<label>Year</label>
+
+<select name="year">
+<option>1st Year</option>
+<option>2nd Year</option>
+<option>3rd Year</option>
+<option>4th Year</option>
+</select>
+
+<label>Department</label>
+
+<select name="department">
+<option>CSE</option>
+<option>IT</option>
+<option>ECE</option>
+<option>EEE</option>
+<option>MECH</option>
+<option>CIVIL</option>
+</select>
+
+<label>Section</label>
+<input type="text" name="section">
+
+<label>Student Type</label>
+
+<div class="gender-select">
+
+<input type="radio" id="day" name="student_type" value="Dayscholar">
+<label for="day" class="gender-btn">Dayscholar</label>
+
+<input type="radio" id="hostel" name="student_type" value="Hosteller">
+<label for="hostel" class="gender-btn">Hosteller</label>
+
+</div>
+
+<label>Complaint Title</label>
+<input type="text" name="title">
+
+<label>Complaint Description</label>
+<textarea name="description"></textarea>
+
+<!-- Hidden field to tell backend this is NORMAL complaint -->
+<input type="hidden" name="complaint_type" value="normal">
+
+<div class="buttons">
+
+<button type="submit">Submit</button>
+<button type="reset">Reset</button>
+
+</div>
+
 </form>
+
+
+<!-- ================================================= -->
+<!-- HOSTEL COMPLAINT FORM -->
+<!-- ================================================= -->
+
+<form id="hostelForm" class="form-box" method="POST">
+
+{% csrf_token %}
+
+<h3>Hostel Complaint Form</h3>
+
+<label>Name</label>
+<input type="text" name="name">
+
+<label>Register Number</label>
+<input type="text" name="register_number">
+
+<label>Year</label>
+
+<select name="year">
+<option>1st Year</option>
+<option>2nd Year</option>
+<option>3rd Year</option>
+<option>4th Year</option>
+</select>
+
+<label>Gender</label>
+
+<div class="gender-select">
+
+<input type="radio" id="male2" name="gender" value="Male" onclick="showHostel('male')">
+<label for="male2" class="gender-btn">Male</label>
+
+<input type="radio" id="female2" name="gender" value="Female" onclick="showHostel('female')">
+<label for="female2" class="gender-btn">Female</label>
+
+</div>
+
+<label>Hostel</label>
+
+<select id="hostelSelect" name="hostel">
+<option>Select Hostel</option>
+</select>
+
+<label>Floor Number</label>
+<input type="text" name="floor">
+
+<label>Room Number</label>
+<input type="text" name="room">
+
+<label>Complaint Title</label>
+<input type="text" name="title">
+
+<label>Complaint Description</label>
+<textarea name="description"></textarea>
+
+<input type="hidden" name="complaint_type" value="normal">
+
+<div class="buttons">
+
+<button type="submit">Submit</button>
+<button type="reset">Reset</button>
+
+</div>
+
+</form>
+
+
+<!-- ================================================= -->
+<!-- ANONYMOUS COMPLAINT FORM -->
+<!-- ================================================= -->
+
+<form id="anonymousForm" class="form-box" method="POST">
+
+{% csrf_token %}
+
+<h3>Anonymous Complaint</h3>
+
+<p>
+You can submit this complaint anonymously. Your identity will not be recorded.
+</p>
+
+<label>Complaint Title</label>
+<input type="text" name="title">
+
+<label>Complaint Description</label>
+<textarea name="description"></textarea>
+
+<input type="hidden" name="complaint_type" value="anonymous">
+
+<div class="buttons">
+
+<button type="submit">Submit</button>
+<button type="reset">Reset</button>
+
+</div>
+
+</form>
+
+</div>
+
+<script src="{% static 'js/complaint.js' %}"></script>
+
+</body>
+</html>

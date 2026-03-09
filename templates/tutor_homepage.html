@@ -1,6 +1,58 @@
-<h1>Tutor Dashboard</h1>
-<p>Welcome, Tutor!</p>
-<a href="/complaints/tutor/">View Student Complaints</a>
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Smart Campus Complaint System</title>
+
+<link rel="stylesheet" href="{% static 'css/tutor_homepage.css' %}">
+
+</head>
+
+<body>
+
+<header class="header">
+
+<h2>SMART CAMPUS COMPLAINT SYSTEM</h2>
+
+<div class="user">
+Mr. Ramesh | Tutor
+</div>
+
+</header>
 
 
-<a href="/logout/">Logout</a>
+<div class="sidebar">
+
+<a href="#">Profile 👤</a>
+<a href="#">Logout 🚪</a>
+
+</div>
+
+
+<div class="main">
+
+<h2>TUTOR HOME PAGE</h2>
+
+<div class="dashboard-boxes">
+
+<div class="box" onclick="openComplaints()">
+📢
+<h3>Complaints</h3>
+</div>
+
+<div class="box" onclick="openLeaveForm()">
+📝
+<h3>Leave Form</h3>
+</div>
+
+</div>
+
+</div>
+
+
+<script src="{% static 'js/tutor_homepage.js' %}"></script>
+
+</body>
+</html>

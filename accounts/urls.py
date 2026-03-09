@@ -12,4 +12,7 @@ urlpatterns = [
     path('tutor/', views.tutor_home, name='tutor_homepage'),
     path('hod/', views.hod_home, name='hod_homepage'),
     path('principal/', views.principal_home, name='principal_homepage'),
+    path("my-requests/", views.my_requests, name="my_requests"),
+    path('notifications/', views.notifications, name='notifications'),
+    path('profile/', views.profile, name='profile'),
 ]

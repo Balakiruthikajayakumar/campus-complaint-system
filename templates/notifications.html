@@ -1,0 +1,36 @@
+<h2>Notifications</h2>
+
+<h3>Complaint Updates</h3>
+
+{% for complaint in complaints %}
+
+<p>
+Complaint: {{ complaint.title }}  
+Status: <b>{{ complaint.status }}</b>
+</p>
+
+{% endfor %}
+
+
+<h3>Leave Updates</h3>
+
+{% for leave in leaves %}
+
+<p>
+Leave {{ leave.from_date }} - {{ leave.to_date }}  
+Status: <b>{{ leave.status }}</b>
+</p>
+
+{% endfor %}
+
+
+<h3>Outpass Updates</h3>
+
+{% for outpass in outpasses %}
+
+<p>
+Outpass {{ outpass.from_date }} - {{ outpass.to_date }}  
+Status: <b>{{ outpass.status }}</b>
+</p>
+
+{% endfor %}

@@ -38,10 +38,10 @@ class User(AbstractUser):
     )
 
     # Extra Fields
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-    department = models.CharField(max_length=20, choices=DEPT_CHOICES, null=True, blank=True)
-    year = models.CharField(max_length=5, choices=YEAR_CHOICES, null=True, blank=True)
+    role = models.CharField(max_length=50, choices=ROLE_CHOICES)
+    department = models.CharField(max_length=50, choices=DEPT_CHOICES, null=True, blank=True)
+    year = models.CharField(max_length=20, choices=YEAR_CHOICES, null=True, blank=True)
     section = models.CharField(max_length=5, choices=SECTION_CHOICES, null=True, blank=True)
-
+    email = models.EmailField(unique=True, null=True, blank=True)
     def __str__(self):
         return self.username

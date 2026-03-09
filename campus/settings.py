@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'complaints',
-    'lostfound',
+    'outpass',
+    'leave_form',
 ]
 
 MIDDLEWARE = [
@@ -124,19 +125,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-import os
-
+# URL path used to access static files in the browser
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
-import os
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+# Folder where Django will look for your static files during development
+# This points to: campus_system/campus/static
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+# Folder where static files will be collected for production
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# EMAIL CONFIGURATION (Gmail)
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'balakiruthikajayakumar@gmail.com'
+EMAIL_HOST_PASSWORD = 'eedupibdjqhuwqsf'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

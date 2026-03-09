@@ -1,0 +1,142 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #f0f4f9; /* Soft grey-blue background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.main-container {
+    background-color: #ffffff;
+    width: 900px;
+    height: 550px;
+    border-radius: 20px;
+    display: flex;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Left Side Styles */
+.left-side {
+    flex: 1.2;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #2b67be;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.illustration {
+    width: 100%;
+    margin-top: auto;
+    opacity: 0.8;
+}
+
+/* Right Side / Login Card Styles */
+.right-side {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fcfdfe; /* Slightly different white for contrast */
+}
+
+.login-card {
+    background: white;
+    padding: 40px;
+    width: 350px;
+    border-radius: 20px;
+    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.login-card h2 {
+    color: #334155;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+/* Input Fields */
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #2b67be;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #3b82f6;
+}
+
+/* Links and Buttons */
+.forgot-password {
+    text-align: right;
+    margin-bottom: 25px;
+}
+
+.forgot-password a {
+    font-size: 13px;
+    color: #2b67be;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #2563eb;
+}
+
+.register-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.register-text a {
+    color: #2b67be;
+    text-decoration: none;
+    font-weight: 600;
+}

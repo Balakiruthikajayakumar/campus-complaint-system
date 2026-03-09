@@ -1,128 +1,158 @@
-{% load static  %} 
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Registration</title>
-</head>
+<title>Smart Campus - Register</title>
 
-<body>
-
-<center>
-
-<h1>User Registration</h1>
-
-<form method="POST">
-    {% csrf_token %}
-
-    <!-- Username -->
-    <label>Username :</label><br>
-    <input type="text" name="username" placeholder="Enter Username" required>
-    <br><br>
-
-    <!-- Password -->
-    <label>Password :</label><br>
-    <input type="password" name="password" placeholder="Enter Password" required>
-    <br><br>
-
-    <!-- Role -->
-    <label>Role</label>
-    <select name="role" id="role" onchange="roleFilter()" required>
-    <option value="">Select Role</option>
-    <option value="student">Student</option>
-    <option value="tutor">Tutor</option>
-    <option value="hod">HOD</option>
-    <option value="principal">Principal</option>
-    </select>
-    <br><br>
-
-    <!-- Department -->
-    <div id="deptBox">
-
-<label>Department</label>
-<select name="department">
-    <option value="">Select Department</option>
-    <option>CSE</option>
-    <option>IT</option>
-    <option>ECE</option>
-    <option>MECH</option>
-</select>
-
-</div>
-    <br><br>
-
-    <!-- Year -->
-    <div id="yearBox">
-
-<label>Year</label>
-<select name="year">
-    <option value="">Select Year</option>
-    <option value="1">First Year</option>
-    <option value="2">Second Year</option>
-    <option value="3">Third Year</option>
-    <option value="4">Fourth Year</option>
-</select>
-
-</div>  
-    <br><br>
-
-    <!-- Section -->
-        <div id="sectionBox">
-
-<label>Section</label>
-<select name="section">
-    <option value="">Select Section</option>
-    <option>A</option>
-    <option>B</option>
-    <option>C</option>
-</select>
-
-</div>
-<br><br>
-
-    <!-- Submit -->
-    <button type="submit">Register</button>
-
-</form>
-
-<br>
-
-<a href="/login/">Already have account? Login</a>
-
-</center>
+<link rel="stylesheet" href="{% static 'css/register.css' %}?v=1">
 
 <script>
 
-function roleFilter(){
+function roleChange(){
 
-let role = document.getElementById("role").value;
+let role=document.getElementById("role").value
 
-let year = document.getElementById("yearBox");
-let dept = document.getElementById("deptBox");
-let section = document.getElementById("sectionBox");
+document.getElementById("departmentDiv").style.display="none"
+document.getElementById("accommodationDiv").style.display="none"
+document.getElementById("sectionDiv").style.display="none"
+document.getElementById("registerDiv").style.display="none"
+document.getElementById("yearDiv").style.display="none"
 
-/* PRINCIPAL */
-if(role === "principal"){
-    year.style.display="none";
-    dept.style.display="none";
-    section.style.display="none";
+/* Student */
+if(role=="Student"){
+document.getElementById("departmentDiv").style.display="block"
+document.getElementById("accommodationDiv").style.display="block"
+document.getElementById("registerDiv").style.display="block"
+document.getElementById("yearDiv").style.display="block"
+}
+
+/* Tutor */
+else if(role=="Tutor"){
+document.getElementById("departmentDiv").style.display="block"
 }
 
 /* HOD */
-else if(role === "hod"){
-    year.style.display="none";
-    section.style.display="none";
-    dept.style.display="block";
+else if(role=="HOD"){
+document.getElementById("departmentDiv").style.display="block"
 }
 
-/* STUDENT + TUTOR */
+/* Deputy Warden */
+else if(role=="Deputy Warden"){
+document.getElementById("yearDiv").style.display="block"
+}
+
+}
+
+function departmentChange(){
+
+let dept=document.getElementById("department").value
+let role=document.getElementById("role").value
+
+if(dept=="CSE" && (role=="Student" || role=="Tutor")){
+document.getElementById("sectionDiv").style.display="block"
+}
 else{
-    year.style.display="block";
-    dept.style.display="block";
-    section.style.display="block";
+document.getElementById("sectionDiv").style.display="none"
 }
 
 }
 
 </script>
+
+</head>
+
+<body>
+
+<div class="topbar">
+<div>🎓 Smart Campus</div>
+</div>
+
+<div class="main">
+
+<h2>Register New Account</h2>
+
+<div class="form-box">
+
+<form method="POST">
+{% csrf_token %}
+
+<label>Name</label>
+<input type="text" name="name" required>
+
+<label>Email</label>
+<input type="email" name="email" required>
+
+<label>Password</label>
+<input type="password" name="password" required>
+
+<label>Role</label>
+<select id="role" name="role" onchange="roleChange()" required>
+
+<option value="">Select Role</option>
+<option>Student</option>
+<option>Tutor</option>
+<option>HOD</option>
+<option>Principal</option>
+<option>Deputy Warden</option>
+<option>Associate Warden</option>
+
+</select>
+
+<div id="registerDiv" class="hidden">
+<label>Register Number</label>
+<input type="text" name="reg_no">
+</div>
+
+<div id="yearDiv" class="hidden">
+<label>Year</label>
+<select name="year">
+<option>1st Year</option>
+<option>2nd Year</option>
+<option>3rd Year</option>
+<option>4th Year</option>
+</select>
+</div>
+
+<div id="departmentDiv" class="hidden">
+<label>Department</label>
+<select id="department" name="department" onchange="departmentChange()">
+<option value="">Select Department</option>
+<option>CSE</option>
+<option>ECE</option>
+<option>EEE</option>
+<option>MECH</option>
+<option>IT</option>
+</select>
+</div>
+
+<div id="sectionDiv" class="hidden">
+<label>Section</label>
+<select name="section">
+<option>A</option>
+<option>B</option>
+<option>C</option>
+</select>
+</div>
+
+<div id="accommodationDiv" class="hidden">
+<label>Accommodation</label>
+<select name="accommodation">
+<option>Hostel</option>
+<option>Day Scholar</option>
+</select>
+</div>
+
+<button type="submit">Register</button>
+
+<div class="login-text">
+Already registered? <a href="{% url 'login' %}">Login</a>
+</div>
+
+</form>
+
+</div>
+
+</div>
+
 </body>
 </html>
