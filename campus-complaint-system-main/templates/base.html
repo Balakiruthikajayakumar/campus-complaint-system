@@ -1,0 +1,100 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Campus System</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<!-- ================= TOP NAVBAR ================= -->
+<nav class="navbar">
+
+    <!-- MENU ICON -->
+    <span class="menu-btn" onclick="toggleSidebar()">☰</span>
+
+    <!-- LOGO -->
+    <div class="logo">
+        🎓 Smart Campus System
+    </div>
+
+    <!-- USER INFO -->
+    <div class="user-section">
+        {% if user.is_authenticated %}
+            👤 {{ user.username }}
+            <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+        {% endif %}
+    </div>
+
+</nav>
+
+
+<!-- ================= SIDEBAR ================= -->
+<div id="sidebar" class="sidebar">
+
+    {% if user.is_authenticated %}
+
+        <!-- STUDENT -->
+        {% if user.role == "student" %}
+            <a href="{% url 'student_homepage' %}">🏠 Home</a>
+            <a href="{% url 'submit_complaint' %}">➕ Submit Complaint</a>
+            <a href="{% url 'my_complaints' %}">📄 My Complaints</a>
+
+        <!-- TUTOR -->
+        {% elif user.role == "tutor" %}
+            <a href="{% url 'tutor_homepage' %}">🏠 Home</a>
+            <a href="{% url 'tutor_complaints' %}">📋 Complaints</a>
+
+        <!-- HOD -->
+        {% elif user.role == "hod" %}
+            <a href="{% url 'hod_homepage' %}">🏠 Home</a>
+            <a href="{% url 'hod_complaints' %}">📋 Complaints</a>
+
+        <!-- PRINCIPAL -->
+        {% elif user.role == "principal" %}
+            <a href="{% url 'principal_homepage' %}">🏠 Home</a>
+            <a href="{% url 'principal_complaints' %}">📋 Complaints</a>
+        {% endif %}
+
+        <a href="{% url 'lostfound_home' %}">🎒 Lost & Found</a>
+        <a href="#">📞 Support</a>
+
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+<div class="main-content">
+    {% block content %}
+    {% endblock %}
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    <p>
+        © 2026 Smart Campus Complaint Management System |
+        Developed for Academic Purpose
+    </p>
+</footer>
+
+
+<!-- ================= SIDEBAR SCRIPT ================= -->
+<script>
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>
