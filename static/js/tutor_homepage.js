@@ -6,6 +6,6 @@ window.location.href="/complaints/"
 
 function openLeaveForm(){
 
-window.location.href="/leave/leave_verification/"
+window.location.href="/leave/tutor/"
 
 }

@@ -1,52 +1,55 @@
-let currentFilter = "All";
+// FILTER BUTTONS
 
-function filterLeave(status){
-
-currentFilter = status;
+function filterLeave(type){
 
 let rows = document.querySelectorAll("#leaveBody tr");
 
 rows.forEach(row => {
 
-let statusText = row.querySelector(".status").innerText;
+let statusElement = row.querySelector(".status");
 
-if(currentFilter === "All" || statusText === currentFilter){
-
-row.style.display = "";
-
+if(!statusElement){
+return;
 }
+
+let status = statusElement.innerText.trim();
+
+if(type === "All"){
+row.style.display = "";
+}
+
+else if(type === "Pending" && status === "submitted"){
+row.style.display = "";
+}
+
+else if(type === "Approved" && status === "tutor_approved"){
+row.style.display = "";
+}
+
+else if(type === "Forwarded" && (status === "hod_approved" || status === "deputy_approved")){
+row.style.display = "";
+}
+
+else if(type === "Rejected" && status === "rejected"){
+row.style.display = "";
+}
+
 else{
-
 row.style.display = "none";
-
 }
 
 });
 
 }
 
-function approveLeave(id){
 
-fetch(`/leave/tutor-approve/${id}/`)
-.then(response => location.reload())
+// SEARCH FUNCTION
 
-}
+document.addEventListener("DOMContentLoaded", function(){
 
-function rejectLeave(id){
+let search = document.getElementById("search");
 
-fetch(`/leave/tutor-reject/${id}/`)
-.then(response => location.reload())
-
-}
-
-function forwardLeave(id){
-
-fetch(`/leave/tutor-forward/${id}/`)
-.then(response => location.reload())
-
-}
-
-document.getElementById("search").addEventListener("keyup", function(){
+search.addEventListener("keyup", function(){
 
 let value = this.value.toLowerCase();
 
@@ -60,8 +63,11 @@ row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
 
 });
 
+});
+
+
+// BACK BUTTON
+
 function goBack(){
-
 window.history.back();
-
 }

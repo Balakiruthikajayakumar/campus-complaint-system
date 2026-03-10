@@ -6,6 +6,7 @@
 
 <title>Smart Campus Complaint System</title>
 
+<!-- Tutor homepage CSS -->
 <link rel="stylesheet" href="{% static 'css/tutor_homepage.css' %}">
 
 </head>
@@ -16,6 +17,7 @@
 
 <h2>SMART CAMPUS COMPLAINT SYSTEM</h2>
 
+<!-- Logged in user -->
 <div class="user">
 Mr. Ramesh | Tutor
 </div>
@@ -23,9 +25,12 @@ Mr. Ramesh | Tutor
 </header>
 
 
+<!-- Sidebar -->
 <div class="sidebar">
 
 <a href="#">Profile 👤</a>
+
+<!-- Logout link (you can connect later to Django logout) -->
 <a href="#">Logout 🚪</a>
 
 </div>
@@ -37,12 +42,25 @@ Mr. Ramesh | Tutor
 
 <div class="dashboard-boxes">
 
-<div class="box" onclick="openComplaints()">
+<!-- ======================================================
+Complaints Dashboard Button
+This opens the tutor complaints page
+Final URL becomes:
+http://127.0.0.1:8000/complaints/complaints/
+====================================================== -->
+
+<div class="box" onclick="window.location.href='/complaints/complaints/'">
 📢
 <h3>Complaints</h3>
 </div>
 
-<div class="box" onclick="openLeaveForm()">
+
+<!-- ======================================================
+Leave Verification Button
+This opens tutor leave page
+====================================================== -->
+
+<div class="box" onclick="window.location.href='/leave/tutor/'">
 📝
 <h3>Leave Form</h3>
 </div>
@@ -52,6 +70,7 @@ Mr. Ramesh | Tutor
 </div>
 
 
+<!-- Tutor homepage JavaScript -->
 <script src="{% static 'js/tutor_homepage.js' %}"></script>
 
 </body>

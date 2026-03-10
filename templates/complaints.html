@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Smart Campus Complaint System</title>
+
+<!-- Django static CSS -->
+<link rel="stylesheet" href="{% static 'css/complaints.css' %}">
+
+</head>
+
+<body>
+
+<header class="header">
+
+<h2>SMART CAMPUS COMPLAINT SYSTEM</h2>
+
+<div class="user-section">
+<div class="username">Mr. Ramesh | Tutor</div>
+<button class="back-btn" onclick="goBack()">← Back</button>
+</div>
+
+</header>
+
+
+<div class="sidebar">
+
+<a href="#">Profile 👤</a>
+<a href="/logout/">Logout 🚪</a>
+
+</div>
+
+
+<div class="main">
+
+<h2>COMPLAINTS</h2>
+
+
+<div class="filter-buttons">
+
+<button onclick="filterComplaints('All')">All</button>
+<button onclick="filterComplaints('Pending')">Pending</button>
+<button onclick="filterComplaints('Approved')">Approved</button>
+<button onclick="filterComplaints('Forwarded')">Forwarded</button>
+<button onclick="filterComplaints('Rejected')">Rejected</button>
+
+</div>
+
+
+<input type="text" id="search" placeholder="Search complaint...">
+
+
+<table id="complaintTable">
+
+<thead>
+<tr>
+
+<th>ID</th>
+<th>Student</th>
+<th>Complaint</th>
+<th>Category</th>
+<th>Status</th>
+<th>Actions</th>
+
+</tr>
+</thead>
+
+<tbody id="complaintsBody"></tbody>
+
+</table>
+
+</div>
+
+<!-- Django static JS -->
+<script src="{% static 'js/tutor_complaints_page.js' %}"></script>
+
+</body>
+</html>

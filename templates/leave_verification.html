@@ -20,7 +20,7 @@
 
 <div class="sidebar">
     <a href="#">Profile 👤</a>
-    <a href="#">Logout 🚪</a>
+    <a href="{% url 'logout' %}">Logout 🚪</a>
 </div>
 
 <div class="main">
@@ -29,10 +29,9 @@
 
     <div class="filter-buttons">
         <button onclick="filterLeave('All')">All</button>
-        <button onclick="filterLeave('submitted')">Pending</button>
-        <button onclick="filterLeave('tutor_approved')">Approved</button>
-        <button onclick="filterLeave('hod_approved')">Forwarded</button>
-        <button onclick="filterLeave('rejected')">Rejected</button>
+        <button onclick="filterLeave('Pending')">Pending</button>
+        <button onclick="filterLeave('Approved')">Approved</button>
+        <button onclick="filterLeave('Rejected')">Rejected</button>
     </div>
 
     <input type="text" id="search" placeholder="Search student...">
