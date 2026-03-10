@@ -1,18 +1,70 @@
-{% extends "base.html" %}
 {% load static %}
 
-{% block extra_css %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Smart Campus Complaint System</title>
+
+<!-- Load CSS from static folder -->
 <link rel="stylesheet" href="{% static 'css/hod_homepage.css' %}">
-{% endblock %}
 
-{% block content %}
-<div class="hod-homepage-container">
-    <h1>🏛️ HOD Dashboard</h1>
-    <p>Welcome, {{ user.username }}!</p>
+</head>
 
-    <div class="actions">
-        <a href="{% url 'hod_complaints' %}" class="btn">📋 View Complaints</a>
-        <a href="{% url 'logout' %}" class="btn secondary">🚪 Logout</a>
-    </div>
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+<h2>SMART CAMPUS COMPLAINT SYSTEM</h2>
+
+<div class="user">
+{{ request.user.username }} | HOD
 </div>
-{% endblock %}
+
+</header>
+
+
+<!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+<a href="{% url 'hod_profile' %}">Profile 👤</a>
+
+<a href="{% url 'logout' %}">Logout 🚪</a>
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main">
+
+<h2>HOD HOME PAGE</h2>
+
+<div class="dashboard-boxes">
+
+<!-- Complaints -->
+<div class="box" onclick="openComplaints()">
+📢
+<h3>Complaints</h3>
+</div>
+
+<!-- Leave Form -->
+<div class="box" onclick="openLeaveForm()">
+📝
+<h3>Leave Form</h3>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- Load JS -->
+<script src="{% static 'js/hod_homepage.js' %}"></script>
+
+</body>
+</html>

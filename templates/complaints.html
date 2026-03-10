@@ -1,28 +1,38 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
 
 <title>Smart Campus Complaint System</title>
 
-<!-- Django static CSS -->
+<!-- Load CSS from static folder -->
 <link rel="stylesheet" href="{% static 'css/complaints.css' %}">
 
 </head>
 
 <body>
 
+<!-- ================= HEADER ================= -->
+
 <header class="header">
 
 <h2>SMART CAMPUS COMPLAINT SYSTEM</h2>
 
 <div class="user-section">
-<div class="username">Mr. Ramesh | Tutor</div>
+
+<!-- Logged in user -->
+<div class="username">{{ request.user.username }} | Tutor</div>
+
+<!-- Back button -->
 <button class="back-btn" onclick="goBack()">← Back</button>
+
 </div>
 
 </header>
 
+
+<!-- ================= SIDEBAR ================= -->
 
 <div class="sidebar">
 
@@ -32,24 +42,38 @@
 </div>
 
 
+<!-- ================= MAIN CONTENT ================= -->
+
 <div class="main">
 
 <h2>COMPLAINTS</h2>
 
 
+<!-- ===== FILTER BUTTONS ===== -->
+
 <div class="filter-buttons">
 
+<!-- Show all complaints -->
 <button onclick="filterComplaints('All')">All</button>
-<button onclick="filterComplaints('Pending')">Pending</button>
-<button onclick="filterComplaints('Approved')">Approved</button>
-<button onclick="filterComplaints('Forwarded')">Forwarded</button>
-<button onclick="filterComplaints('Rejected')">Rejected</button>
+
+<!-- Show only submitted complaints -->
+<button onclick="filterComplaints('submitted')">Pending</button>
+
+<!-- Show approved complaints -->
+<button onclick="filterComplaints('tutor_approved')">Approved</button>
+
+<!-- Show rejected complaints -->
+<button onclick="filterComplaints('rejected')">Rejected</button>
 
 </div>
 
 
+<!-- ===== SEARCH BOX ===== -->
+
 <input type="text" id="search" placeholder="Search complaint...">
 
+
+<!-- ================= TABLE ================= -->
 
 <table id="complaintTable">
 
@@ -66,14 +90,134 @@
 </tr>
 </thead>
 
-<tbody id="complaintsBody"></tbody>
+
+<tbody id="complaintsBody">
+
+<!-- Loop through complaints coming from backend -->
+
+{% for complaint in complaints %}
+
+<tr>
+
+<!-- Complaint ID -->
+<td>CMP{{ complaint.id }}</td>
+
+
+<!-- Student name -->
+<td>
+
+{% if complaint.is_anonymous %}
+Anonymous
+{% else %}
+{{ complaint.student.username }}
+{% endif %}
+
+</td>
+
+
+<!-- Complaint title -->
+<td>{{ complaint.title }}</td>
+
+
+<!-- Complaint category -->
+<td>{{ complaint.category }}</td>
+
+
+<!-- ================= STATUS ================= -->
+
+<td>
+
+<span class="status {{ complaint.status }}">
+
+<!-- Convert backend status to readable text -->
+
+{% if complaint.status == "submitted" %}
+Pending
+
+{% elif complaint.status == "tutor_approved" %}
+Approved
+
+{% elif complaint.status == "hod_approved" %}
+Forwarded to HOD
+
+{% elif complaint.status == "rejected" %}
+Rejected
+
+{% endif %}
+
+</span>
+
+</td>
+
+
+<!-- ================= ACTIONS ================= -->
+
+<td>
+
+<!-- VIEW BUTTON (always visible) -->
+<a href="{% url 'view_complaint' complaint.id %}">
+<button class="view">View</button>
+</a>
+
+
+<!-- APPROVE / REJECT only for pending complaints -->
+
+{% if complaint.status == "submitted" %}
+
+<a href="{% url 'approve_tutor' complaint.id %}">
+<button class="approve">Approve</button>
+</a>
+
+<a href="{% url 'reject_tutor' complaint.id %}">
+<button class="reject">Reject</button>
+</a>
+
+{% endif %}
+
+<!-- If already approved show forwarded text -->
+
+{% if complaint.status == "tutor_approved" %}
+
+<span style="margin-left:10px;color:green;font-weight:bold;">
+Forwarded to HOD
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+
+<!-- If no complaints exist -->
+
+{% empty %}
+
+<tr>
+<td colspan="6">No complaints found</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
 
 </table>
 
 </div>
 
-<!-- Django static JS -->
-<script src="{% static 'js/tutor_complaints_page.js' %}"></script>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script src="{% static 'js/complaints_script.js' %}"></script>
+
+<script>
+
+/* Back button */
+function goBack(){
+window.history.back()
+}
+
+</script>
 
 </body>
 </html>

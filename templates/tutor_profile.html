@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Tutor Profile</title>
+
+<!-- Django Static CSS -->
+<link rel="stylesheet" href="{% static 'css/tutor_profile.css' %}">
+
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<div class="header">
+
+<h2>SMART CAMPUS COMPLAINT SYSTEM</h2>
+
+<div class="user-area">
+
+<div class="username" id="tutorName">
+{{ request.user.username }} | Tutor
+</div>
+
+<button class="back-btn" onclick="goBack()">Back</button>
+
+</div>
+
+</div>
+
+
+<!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+<a href="{% url 'tutor_homepage' %}">Home</a>
+<a href="/logout/">Logout</a>
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main">
+
+<h2>TUTOR PROFILE</h2>
+
+<div class="profile-card">
+
+<div class="detail">
+<label>Name</label>
+<p id="name">{{ request.user.username }}</p>
+</div>
+
+<div class="detail">
+<label>Email</label>
+<p id="email">{{ request.user.email }}</p>
+</div>
+
+<div class="detail">
+<label>Department</label>
+<p id="department">{{ request.user.department }}</p>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- Django Static JS -->
+<script src="{% static 'js/profile.js' %}"></script>
+
+</body>
+</html>

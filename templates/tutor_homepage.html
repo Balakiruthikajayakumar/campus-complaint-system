@@ -19,7 +19,7 @@
 
 <!-- Logged in user -->
 <div class="user">
-Mr. Ramesh | Tutor
+{{ request.user.username }} | {{ request.user.role|title }}
 </div>
 
 </header>
@@ -28,10 +28,10 @@ Mr. Ramesh | Tutor
 <!-- Sidebar -->
 <div class="sidebar">
 
-<a href="#">Profile 👤</a>
+<a href="{% url 'tutor_profile' %}">Profile 👤</a>
 
 <!-- Logout link (you can connect later to Django logout) -->
-<a href="#">Logout 🚪</a>
+<a href="{% url 'logout' %}">Logout 🚪</a>
 
 </div>
 

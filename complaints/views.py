@@ -178,10 +178,12 @@ def approve_by_tutor(request, id):
 
     complaint = get_object_or_404(Complaint, id=id)
 
+    # Change status
     complaint.status = "tutor_approved"
     complaint.save()
 
-    return redirect("tutor_complaints")
+    # Go back to complaints page
+    return redirect("complaints")
 
 
 # =====================================================
@@ -194,10 +196,12 @@ def reject_by_tutor(request, id):
 
     complaint = get_object_or_404(Complaint, id=id)
 
+    # Change status
     complaint.status = "rejected"
     complaint.save()
 
-    return redirect("tutor_complaints")
+    # Go back to complaints page
+    return redirect("complaints")
 
 
 # =====================================================
@@ -392,5 +396,43 @@ def track_complaint(request, id):
         "complaint": complaint
     })
 
+@login_required
+@role_required("tutor")
 def complaints_page(request):
-    return render(request,"complaints.html")
+
+    complaints = Complaint.objects.filter(
+        tutor=request.user
+    ).order_by("-id")
+
+    return render(request, "complaints.html", {
+        "complaints": complaints
+    })
+
+# =====================================================
+# TUTOR VIEW COMPLAINT DETAILS
+# =====================================================
+
+@login_required
+@role_required("tutor")
+def view_complaint(request, id):
+
+    complaint = get_object_or_404(Complaint, id=id)
+
+    return render(request, "view_complaint.html", {
+        "complaint": complaint
+    })
+
+@login_required
+def tutor_profile(request):
+    return render(request, "tutor_profile.html")
+
+#=========================================
+#HOD HOME PAGE
+#=========================================
+@login_required
+def hod_homepage(request):
+    return render(request,"hod_homepage.html")
+
+@login_required
+def hod_profile(request):
+    return render(request,"hod_profile.html")

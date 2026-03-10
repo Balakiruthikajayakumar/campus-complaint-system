@@ -33,7 +33,8 @@ urlpatterns = [
     # =====================================================
     # HOD DASHBOARD
     # =====================================================
-
+    #HOD HOME PAGE
+    path("hod/", views.hod_homepage, name="hod_homepage"),
     # HOD complaint list
     path('hod/', views.hod_complaints, name='hod_complaints'),
 
@@ -42,6 +43,8 @@ urlpatterns = [
 
     # HOD reject complaint
     path('hod/reject/<int:id>/', views.reject_by_hod, name='reject_hod'),
+
+    path("hod/profile/", views.hod_profile, name="hod_profile"),
 
 
     # =====================================================
@@ -67,5 +70,8 @@ urlpatterns = [
     
     #Track complaint
     path('track/<int:id>/', views.track_complaint, name='track_complaint'),
-    path("complaints/", views.complaints_page, name="complaints")
+    path("complaints/", views.complaints_page, name="complaints"),
+
+    path("view/<int:id>/", views.view_complaint, name="view_complaint"),
+    path("tutor/profile/", views.tutor_profile, name="tutor_profile"),
 ]
