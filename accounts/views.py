@@ -23,49 +23,6 @@ def home(request):
 
 
 # =====================================
-# REGISTER USER
-# =====================================
-def register_user(request):
-
-    if request.method == 'POST':
-
-        # Get form data from HTML form
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        role = request.POST.get('role')
-        department = request.POST.get('department')
-        year = request.POST.get('year')
-        section = request.POST.get('section')
-
-        # ⭐ FIX
-        # If username is empty use name/email instead
-        if not username:
-            username = request.POST.get('name') or request.POST.get('email')
-
-        # Prevent duplicate usernames
-        if User.objects.filter(username=username).exists():
-            messages.error(request, "Username already exists ❌")
-            return redirect('register')
-
-        # Create user
-        User.objects.create_user(
-            username=username,
-            email=email,
-            password=password,
-            role=role,
-            department=department,
-            year=year,
-            section=section
-        )
-
-        messages.success(request, "Registration Successful ✅")
-        return redirect('login')
-
-    return render(request, 'register.html')
-
-
-# =====================================
 # LOGIN USER
 # =====================================
 def user_login(request):
@@ -75,36 +32,49 @@ def user_login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        # Authenticate user
-        user = authenticate(
-            request,
-            username=username,
-            password=password
-        )
+        print("DEBUG:", username, password)
 
-        if user is not None:
+        user = authenticate(request, username=username, password=password)
 
-            login(request, user)
+        # ✅ CHECK USER FIRST
+        if user is None:
+            print("❌ LOGIN FAILED")
+            messages.error(request, "Invalid Username or Password")
+            return render(request, 'login.html')
 
-            # ROLE BASED REDIRECT
-            if user.role.lower() == 'student':
-                return redirect('student_homepage')
+        # ✅ LOGIN SUCCESS
+        login(request, user)
 
-            elif user.role.lower() == 'tutor':
-                return redirect('tutor_homepage')
+        # ⚠️ EXTRA SAFETY (VERY IMPORTANT)
+        if not hasattr(user, 'role') or user.role is None:
+            print("❌ ROLE NOT FOUND")
+            messages.error(request, "User role not set")
+            return redirect('login')
 
-            elif user.role.lower() == 'hod':
-                return redirect('hod_homepage')
+        role = user.role.lower()
+        print("ROLE:", role)
 
-            elif user.role.lower() == 'principal':
-                return redirect('principal_homepage')
+        # ✅ REDIRECT BASED ON ROLE
+        if role == 'student':
+            return redirect('student_homepage')
 
-            else:
-                return redirect('/admin/')
+        elif role == 'tutor':
+            return redirect('tutor_homepage')
+
+        elif role == 'hod':
+            return redirect('hod_homepage')
+
+        elif role == 'principal':
+            return redirect('principal_homepage')
+
+        elif role == 'deputy_warden':
+            return redirect('deputy_warden_homepage')
+
+        elif role == 'associate_warden':
+            return redirect('associate_warden_homepage')
 
         else:
-            messages.error(request,
-                           "Invalid Username or Password ❌")
+            return redirect('/admin/')
 
     return render(request, 'login.html')
 
@@ -316,6 +286,52 @@ def principal_home(request):
         'principal_homepage.html',
         context
     )
+
+
+# =====================================
+# DEPUTY WARDEN DASHBOARD
+# =====================================
+@login_required
+def deputy_warden_home(request):
+    pending = LeaveForm.objects.filter(
+        deputy_warden=request.user,
+        status="hod_approved"
+    ).count()
+
+    approved = LeaveForm.objects.filter(
+        deputy_warden=request.user,
+        status="deputy_approved"
+    ).count()
+
+    context = {
+        "pending_count": pending,
+        "approved_count": approved,
+    }
+
+    return render(request, "deputy_warden_homepage.html", context)
+
+
+# =====================================
+# ASSOCIATE WARDEN DASHBOARD
+# =====================================
+@login_required
+def associate_warden_home(request):
+    pending = LeaveForm.objects.filter(
+        associate_warden=request.user,
+        status="deputy_approved"
+    ).count()
+
+    approved = LeaveForm.objects.filter(
+        associate_warden=request.user,
+        status="warden_approved"
+    ).count()
+
+    context = {
+        "pending_count": pending,
+        "approved_count": approved,
+    }
+
+    return render(request, "associate_warden_homepage.html", context)
 @login_required
 def notifications(request):
 
@@ -332,3 +348,60 @@ def notifications(request):
 @login_required
 def profile(request):
     return render(request, "profile.html")
+#==============================
+#===principal commplaints======
+#==============================
+
+from django.shortcuts import get_object_or_404
+
+@login_required
+def principal_complaints(request):
+
+    complaints = Complaint.objects.all()
+
+    return render(request, "principal_complaints.html", {
+        "complaints": complaints
+    })
+
+
+def approve_complaint(request, id):
+    c = Complaint.objects.get(id=id)
+    c.status = "Approved"
+    c.save()
+    return redirect('principal_college_complaints')
+
+
+def reject_complaint(request, id):
+    c = Complaint.objects.get(id=id)
+    c.status = "Rejected"
+    c.save()
+    return redirect('principal_college_complaints')
+
+
+
+def principal_college_complaints(request):
+
+    status = request.GET.get('status')
+
+    if status and status != "All":
+        complaints = Complaint.objects.filter(category="college", status=status)
+    else:
+        complaints = Complaint.objects.filter(category="college")
+
+    return render(request, "principal_complaints.html", {
+        "complaints": complaints
+    })
+
+
+@login_required
+def principal_hostel_complaints(request):
+    complaints = Complaint.objects.filter(category="hostel")
+    return render(request, "principal_hostel.html", {"complaints": complaints})
+
+
+@login_required
+def principal_anonymous_complaints(request):
+    complaints = Complaint.objects.filter(category="anonymous")
+    return render(request, "principal_anonymous.html", {"complaints": complaints})
+def deputy_hostel_complaints(request):
+    return render(request, "deputy_hostel_complaints.html")

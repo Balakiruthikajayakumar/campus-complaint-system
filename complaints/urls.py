@@ -30,23 +30,14 @@ urlpatterns = [
     path('reject/<int:id>/', views.reject_by_tutor, name='reject_tutor'),
 
 
-    # =====================================================
+# =====================================================
 # HOD DASHBOARD
 # =====================================================
 
-# HOD home page
-path("hod/", views.hod_homepage, name="hod_homepage"),
-
-# HOD profile
+# HOD
 path("hod/profile/", views.hod_profile, name="hod_profile"),
-
-# HOD complaints
 path("hod/complaints/", views.hod_complaints, name="hod_complaints"),
-
-# HOD approve complaint
 path("hod/approve/<int:id>/", views.approve_by_hod, name="approve_hod"),
-
-# HOD reject complaint
 path("hod/reject/<int:id>/", views.reject_by_hod, name="reject_hod"),
 
 

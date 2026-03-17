@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Smart Campus Complaint System</title>
+
+<link rel="stylesheet" href="{% static 'css/associate_complaints.css' %}">
+</head>
+
+<body>
+
+<header class="header">
+  <h2>SMART CAMPUS COMPLAINT SYSTEM</h2>
+
+  <div class="user-section">
+    <div class="username">{{ request.user.get_full_name }} | Associate Warden</div>
+    <button class="back-btn" onclick="history.back()">← Back</button>
+  </div>
+</header>
+
+<div class="sidebar">
+  <a href="{% url 'profile' %}">Profile 👤</a>
+  <a href="{% url 'logout' %}">Logout 🚪</a>
+</div>
+
+<div class="main">
+
+<h2>HOSTEL COMPLAINTS</h2>
+
+<div class="filter-buttons">
+  <button onclick="filterComplaints('All')">All</button>
+  <button onclick="filterComplaints('Pending')">Pending</button>
+  <button onclick="filterComplaints('Approved')">Approved</button>
+  <button onclick="filterComplaints('Forwarded')">Forwarded</button>
+  <button onclick="filterComplaints('Rejected')">Rejected</button>
+</div>
+
+<input type="text" id="search" placeholder="Search complaint...">
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Student</th>
+<th>Complaint</th>
+<th>Category</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+{% for c in complaints %}
+<tr>
+  <td>{{ c.id }}</td>
+  <td>{{ c.student.username }}</td>
+  <td>{{ c.complaint_text }}</td>
+  <td>{{ c.category }}</td>
+
+  <td>
+    <span class="status {{ c.status|lower }}">{{ c.status }}</span>
+  </td>
+
+  <td>
+    <a href="{% url 'update_complaint_status' c.id 'Approved' %}" class="approve">Approve</a>
+    <a href="{% url 'update_complaint_status' c.id 'Rejected' %}" class="reject">Reject</a>
+    <a href="{% url 'update_complaint_status' c.id 'Forwarded' %}" class="forward">Forward</a>
+  </td>
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+
+</div>
+
+<script src="{% static 'js/associate_complaints.js' %}"></script>
+
+</body>
+</html>

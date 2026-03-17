@@ -1,17 +1,82 @@
-{% extends "base.html" %}
 {% load static %}
+<!DOCTYPE html>
+<html>
 
-{% block extra_css %}
+<head>
+<title>Smart Campus Complaint System</title>
+
+<!-- ✅ CSS -->
 <link rel="stylesheet" href="{% static 'css/principal_homepage.css' %}">
-{% endblock %}
 
-{% block content %}
-<div class="principal-container">
-    <h1>🏛️ Principal Dashboard</h1>
-    
-    <div class="links">
-        <a href="{% url 'principal_complaints' %}" class="btn view-btn">📋 View Complaints</a>
-        <a href="{% url 'logout' %}" class="btn logout-btn">Logout</a>
+</head>
+
+<body>
+
+<header class="header">
+    <h2>SMART CAMPUS COMPLAINT SYSTEM</h2>
+
+    <!-- ✅ Dynamic username -->
+    <div class="user">
+        {{ request.user.username }} | PRINCIPAL
     </div>
+</header>
+
+
+<div class="sidebar">
+    <a href="#">Profile 👤</a>
+    <a href="{% url 'logout' %}">Logout 🚪</a>
 </div>
-{% endblock %}
+
+
+<div class="main">
+
+    <h2>PRINCIPAL HOME PAGE</h2>
+
+    <div class="dashboard-boxes">
+
+    <!-- College Complaints -->
+    <a href="{% url 'principal_college_complaints' %}" class="box-link">
+        <div class="box">
+            📢
+            <h3>College Complaints</h3>
+        </div>
+    </a>
+
+    <!-- Hostel Complaints -->
+    <a href="{% url 'principal_hostel_complaints' %}" class="box-link">
+        <div class="box">
+            🏠
+            <h3>Hostel Complaints</h3>
+        </div>
+    </a>
+
+    <!-- Anonymous Complaints -->
+    <a href="{% url 'principal_anonymous_complaints' %}" class="box-link">
+        <div class="box">
+            🕵️
+            <h3>Anonymous Complaints</h3>
+        </div>
+    </a>
+
+</div>
+</div>
+
+<!-- ✅ JS -->
+<script>
+
+function openCollegeComplaints(){
+    window.location.href="college_complaints.html"
+}
+
+function openHostelComplaints(){
+    alert("Hostel complaints page coming soon");
+}
+
+function openAnonymousComplaints(){
+    alert("Anonymous complaints page coming soon");
+}
+
+</script>
+
+</body>
+</html>

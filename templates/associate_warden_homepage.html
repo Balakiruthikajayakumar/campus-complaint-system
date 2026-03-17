@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Smart Campus Complaint System</title>
+
+<link rel="stylesheet" href="{% static 'css/associate_home.css' %}">
+</head>
+
+<body>
+
+<header class="header">
+  <h2>SMART CAMPUS COMPLAINT SYSTEM</h2>
+
+  <div class="user">
+    {{ request.user.get_full_name }} | Associate Warden
+  </div>
+</header>
+
+<div class="sidebar">
+  <a href="{% url 'profile' %}">Profile 👤</a>
+  <a href="{% url 'logout' %}">Logout 🚪</a>
+</div>
+
+<div class="main">
+
+<h2>ASSOCIATE WARDEN HOME PAGE</h2>
+
+<div class="dashboard-boxes">
+
+  <div class="box" onclick="openHostelComplaints()">
+    📢
+    <h3>Hostel Complaints</h3>
+  </div>
+
+  <div class="box" onclick="openOutpass()">
+    🚪
+    <h3>Outpass</h3>
+  </div>
+
+  <div class="box" onclick="openLeaveForm()">
+    📝
+    <h3>Leave Form</h3>
+  </div>
+
+</div>
+
+</div>
+
+<script src="{% static 'js/associate_home.js' %}"></script>
+
+</body>
+</html>

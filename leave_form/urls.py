@@ -5,7 +5,7 @@ urlpatterns = [
 
     path("apply/", views.apply_leave, name="apply_leave"),
 
-    path("my/", views.my_requests, name="my_requests"),
+    path("my/", views.my_requests, name="leave_my_requests"),
 
     path("download/<int:id>/", views.download_leave, name="download_leave"),
 

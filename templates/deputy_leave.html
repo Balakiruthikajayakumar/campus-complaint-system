@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Smart Campus Complaint System</title>
+
+<link rel="stylesheet" href="{% static 'css/deputy_leave.css' %}">
+</head>
+
+<body>
+
+<header class="header">
+  <h2>SMART CAMPUS COMPLAINT SYSTEM</h2>
+
+  <div class="user-section">
+    <div>{{ request.user.get_full_name }} | Deputy Warden</div>
+    <button class="back-btn" onclick="history.back()">← Back</button>
+  </div>
+</header>
+
+<div class="sidebar">
+  <a href="{% url 'profile' %}">Profile 👤</a>
+  <a href="{% url 'logout' %}">Logout 🚪</a>
+</div>
+
+<div class="main">
+
+<h2>DEPUTY WARDEN LEAVE FORM VERIFICATION</h2>
+
+<div class="filter-buttons">
+  <button onclick="filterLeave('All')">All</button>
+  <button onclick="filterLeave('Pending')">Pending</button>
+  <button onclick="filterLeave('Approved')">Approved</button>
+  <button onclick="filterLeave('Forwarded')">Forwarded</button>
+  <button onclick="filterLeave('Rejected')">Rejected</button>
+</div>
+
+<input type="text" id="search" placeholder="Search student...">
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Student</th>
+<th>From</th>
+<th>To</th>
+<th>Reason</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody id="leaveBody">
+  <!-- Dynamic data will come here -->
+</tbody>
+
+</table>
+
+</div>
+
+<script src="{% static 'js/deputy_leave.js' %}"></script>
+
+</body>
+</html>

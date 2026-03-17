@@ -453,26 +453,6 @@ def view_complaint(request, id):
     })
 
 @login_required
+@role_required("tutor")
 def tutor_profile(request):
     return render(request, "tutor_profile.html")
-
-#=========================================
-#HOD HOME PAGE
-#=========================================
-@login_required
-def hod_homepage(request):
-    return render(request,"hod_homepage.html")
-
-@login_required
-def hod_profile(request):
-    return render(request,"hod_profile.html")
-
-@login_required
-@role_required("hod")
-def hod_complaints(request):
-
-    complaints = Complaint.objects.filter(status="tutor_approved")
-
-    return render(request,"hod_complaints.html",{
-        "complaints":complaints
-    })

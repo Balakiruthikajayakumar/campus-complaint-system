@@ -8,7 +8,7 @@
     <title>Smart Campus System</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
 
@@ -62,12 +62,21 @@
         {% elif user.role == "principal" %}
             <a href="{% url 'principal_homepage' %}">🏠 Home</a>
             <a href="{% url 'principal_complaints' %}">📋 Complaints</a>
+
+        <!-- DEPUTY WARDEN -->
+        {% elif user.role == "deputy_warden" %}
+            <a href="{% url 'deputy_warden_homepage' %}">🏠 Home</a>
+            <a href="{% url 'deputy_leave_page' %}">📝 Leave Requests</a>
+
+        <!-- ASSOCIATE WARDEN -->
+        {% elif user.role == "associate_warden" %}
+            <a href="{% url 'associate_warden_homepage' %}">🏠 Home</a>
+            <a href="{% url 'warden_leave_page' %}">📝 Leave Requests</a>
         {% endif %}
 
 
     {% else %}
         <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'register' %}">Register</a>
     {% endif %}
 
 </div>

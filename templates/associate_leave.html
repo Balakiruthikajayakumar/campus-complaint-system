@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Smart Campus Complaint System</title>
+
+<link rel="stylesheet" href="{% static 'css/associate_leave.css' %}">
+</head>
+
+<body>
+
+<header class="header">
+  <h2>SMART CAMPUS COMPLAINT SYSTEM</h2>
+
+  <div class="user-section">
+    <div>{{ request.user.get_full_name }} | Associate Warden</div>
+    <button class="back-btn" onclick="history.back()">← Back</button>
+  </div>
+</header>
+
+<div class="sidebar">
+  <a href="{% url 'profile' %}">Profile 👤</a>
+  <a href="{% url 'logout' %}">Logout 🚪</a>
+</div>
+
+<div class="main">
+
+<h2>ASSOCIATE WARDEN LEAVE FORM VERIFICATION</h2>
+
+<div class="filter-buttons">
+  <button onclick="filterLeave('All')">All</button>
+  <button onclick="filterLeave('Forwarded')">Forwarded</button>
+  <button onclick="filterLeave('Approved')">Approved</button>
+  <button onclick="filterLeave('Rejected')">Rejected</button>
+</div>
+
+<input type="text" id="search" placeholder="Search student...">
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Student</th>
+<th>From</th>
+<th>To</th>
+<th>Reason</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+{% for l in leaves %}
+<tr>
+  <td>{{ l.id }}</td>
+  <td>{{ l.student.username }}</td>
+  <td>{{ l.from_date }}</td>
+  <td>{{ l.to_date }}</td>
+  <td>{{ l.reason }}</td>
+
+  <td>
+    <span class="status {{ l.status|lower }}">{{ l.status }}</span>
+  </td>
+
+  <td>
+    <a href="{% url 'update_leave_status' l.id 'Approved' %}" class="approve">Approve</a>
+    <a href="{% url 'update_leave_status' l.id 'Rejected' %}" class="reject">Reject</a>
+  </td>
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+
+</div>
+
+<script src="{% static 'js/associate_leave.js' %}"></script>
+
+</body>
+</html>

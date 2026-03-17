@@ -1,42 +1,113 @@
-{% extends "base.html" %}
 {% load static %}
+<!DOCTYPE html>
+<html>
 
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/principal_complaints.css' %}">
-{% endblock %}
+<head>
+<title>Smart Campus Complaint System</title>
 
-{% block content %}
-<div class="complaints-container">
-    <h2>📋 Principal Complaints</h2>
+<link rel="stylesheet" href="{% static 'css/principal_complaint.css' %}">
+</head>
 
-    {% if complaints %}
-    <table class="complaints-table">
-        <thead>
-            <tr>
-                <th style="width:20%;">Title</th>
-                <th style="width:50%;">Description</th>
-                <th style="width:15%;">Status</th>
-                <th style="width:15%;">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for complaint in complaints %}
-            <tr>
-                <td>{{ complaint.title }}</td>
-                <td>{{ complaint.description }}</td>
-                <td>{{ complaint.status|title }}</td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="/complaints/principal/approve/{{ complaint.id }}/" class="btn approve-btn">Resolve</a>
-                        <a href="/complaints/principal/reject/{{ complaint.id }}/" class="btn reject-btn">Reject</a>
-                    </div>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-        <p class="no-complaints">No complaints available.</p>
-    {% endif %}
+<body>
+
+<header class="header">
+<h2>SMART CAMPUS COMPLAINT SYSTEM</h2>
+
+<div class="user-section">
+<div class="username">{{ request.user.username }} | Principal</div>
+<button class="back-btn" onclick="goBack()">← Back</button>
 </div>
-{% endblock %}
+</header>
+
+<div class="sidebar">
+<a href="#">Profile 👤</a>
+<a href="/logout/">Logout 🚪</a>
+</div>
+
+<div class="main">
+
+<h2>COMPLAINTS</h2>
+
+<div class="filter-buttons">
+<a href="?status=All"><button>All</button></a>
+<a href="?status=Pending"><button>Pending</button></a>
+<a href="?status=Approved"><button>Approved</button></a>
+<a href="?status=Rejected"><button>Rejected</button></a>
+</div>
+
+<input type="text" id="search" placeholder="Search complaint...">
+
+<table id="complaintTable">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Student</th>
+<th>Complaint</th>
+<th>Category</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for c in complaints %}
+<tr>
+
+<td>{{ c.id }}</td>
+<td>{{ c.student_name }}</td>
+<td>{{ c.complaint_text }}</td>
+<td>{{ c.category }}</td>
+
+<td>
+<span class="status {{ c.status|lower }}">
+{{ c.status }}
+</span>
+</td>
+
+<td>
+{% if c.status == "Pending" %}
+<a href="{% url 'approve_complaint' c.id %}">
+<button class="approve">Approve</button>
+</a>
+
+<a href="{% url 'reject_complaint' c.id %}">
+<button class="reject">Reject</button>
+</a>
+{% else %}
+<button class="view">View</button>
+{% endif %}
+</td>
+
+</tr>
+{% empty %}
+<tr>
+<td colspan="6">No complaints found</td>
+</tr>
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+<script>
+function goBack(){
+    window.history.back()
+}
+
+// search filter (keep this JS)
+document.getElementById("search").addEventListener("keyup", function(){
+    let value = this.value.toLowerCase()
+    let rows = document.querySelectorAll("#complaintTable tbody tr")
+
+    rows.forEach(r => {
+        r.style.display = r.innerText.toLowerCase().includes(value) ? "" : "none"
+    })
+})
+</script>
+
+</body>
+</html>
