@@ -31,20 +31,23 @@ urlpatterns = [
 
 
     # =====================================================
-    # HOD DASHBOARD
-    # =====================================================
-    #HOD HOME PAGE
-    path("hod/", views.hod_homepage, name="hod_homepage"),
-    # HOD complaint list
-    path('hod/', views.hod_complaints, name='hod_complaints'),
+# HOD DASHBOARD
+# =====================================================
 
-    # HOD approve complaint
-    path('hod/approve/<int:id>/', views.approve_by_hod, name='approve_hod'),
+# HOD home page
+path("hod/", views.hod_homepage, name="hod_homepage"),
 
-    # HOD reject complaint
-    path('hod/reject/<int:id>/', views.reject_by_hod, name='reject_hod'),
+# HOD profile
+path("hod/profile/", views.hod_profile, name="hod_profile"),
 
-    path("hod/profile/", views.hod_profile, name="hod_profile"),
+# HOD complaints
+path("hod/complaints/", views.hod_complaints, name="hod_complaints"),
+
+# HOD approve complaint
+path("hod/approve/<int:id>/", views.approve_by_hod, name="approve_hod"),
+
+# HOD reject complaint
+path("hod/reject/<int:id>/", views.reject_by_hod, name="reject_hod"),
 
 
     # =====================================================

@@ -104,3 +104,11 @@ margin-top:10px;
 transform:scale(1.05);
 background:#eef2ff;
 }
+.box-link{
+   text-decoration: none;
+   color: inherit;
+}
+a{
+   text-decoration: none;
+   color: inherit;
+}

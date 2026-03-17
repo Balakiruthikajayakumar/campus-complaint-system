@@ -4,13 +4,13 @@
 
 function openComplaints(){
 
-window.location.href="/complaints/hod/";
+window.location.href="/complaints/hod/complaints/";
 
 }
 
 
 /* =========================================
-   OPEN LEAVE FORM PAGE
+   OPEN HOD LEAVE PAGE
 ========================================= */
 
 function openLeaveForm(){

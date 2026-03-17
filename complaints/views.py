@@ -205,39 +205,61 @@ def reject_by_tutor(request, id):
 
 
 # =====================================================
-# HOD DASHBOARD
+# HOD HOME PAGE
+# =====================================================
+
+@login_required
+@role_required("hod")
+def hod_homepage(request):
+    """
+    This loads the HOD dashboard page
+    """
+    return render(request, "hod_homepage.html")
+
+
+# =====================================================
+# HOD PROFILE PAGE
+# =====================================================
+
+@login_required
+@role_required("hod")
+def hod_profile(request):
+    """
+    This loads the HOD profile page
+    """
+    return render(request, "hod_profile.html")
+
+
+# =====================================================
+# HOD COMPLAINTS PAGE
 # =====================================================
 
 @login_required
 @role_required("hod")
 def hod_complaints(request):
+    """
+    HOD can see complaints that are approved by tutor
+    """
 
-    if request.user.department == "Science & Humanities":
+    complaints = Complaint.objects.filter(
+        status="tutor_approved"
+    ).order_by("-id")
 
-        complaints = Complaint.objects.filter(
-            year="1"
-        ).exclude(
-            complaint_type="confidential"
-        )
-
-    else:
-
-        complaints = Complaint.objects.filter(
-            department=request.user.department
-        ).exclude(
-            complaint_type="confidential"
-        )
-
-    return render(request, "hod_complaints.html", {"complaints": complaints})
+    return render(request, "hod_complaints.html", {
+        "complaints": complaints
+    })
 
 
 # =====================================================
-# HOD APPROVE
+# HOD APPROVE COMPLAINT
 # =====================================================
 
 @login_required
 @role_required("hod")
 def approve_by_hod(request, id):
+    """
+    HOD approves complaint and forwards to principal
+    """
 
     complaint = get_object_or_404(Complaint, id=id)
 
@@ -248,12 +270,15 @@ def approve_by_hod(request, id):
 
 
 # =====================================================
-# HOD REJECT
+# HOD REJECT COMPLAINT
 # =====================================================
 
 @login_required
 @role_required("hod")
 def reject_by_hod(request, id):
+    """
+    HOD rejects complaint
+    """
 
     complaint = get_object_or_404(Complaint, id=id)
 
@@ -262,35 +287,22 @@ def reject_by_hod(request, id):
 
     return redirect("hod_complaints")
 
-
 # =====================================================
-# PRINCIPAL DASHBOARD
-# Principal sees all complaints
+# PRINCIPAL COMPLAINTS PAGE
 # =====================================================
 
 @login_required
 @role_required("principal")
 def principal_complaints(request):
+    """
+    Principal can view all complaints in the system
+    """
 
-    complaints = Complaint.objects.all()
+    complaints = Complaint.objects.all().order_by("-id")
 
-    return render(request, "principal_complaints.html", {"complaints": complaints})
-
-
-# =====================================================
-# PRINCIPAL APPROVE (RESOLVE)
-# =====================================================
-
-@login_required
-@role_required("principal")
-def approve_by_principal(request, id):
-
-    complaint = get_object_or_404(Complaint, id=id)
-
-    complaint.status = "resolved"
-    complaint.save()
-
-    return redirect("principal_complaints")
+    return render(request, "principal_complaints.html", {
+        "complaints": complaints
+    })
 
 
 # =====================================================
@@ -304,6 +316,24 @@ def reject_by_principal(request, id):
     complaint = get_object_or_404(Complaint, id=id)
 
     complaint.status = "rejected"
+    complaint.save()
+
+    return redirect("principal_complaints")
+# =====================================================
+# PRINCIPAL APPROVE COMPLAINT
+# =====================================================
+
+@login_required
+@role_required("principal")
+def approve_by_principal(request, id):
+    """
+    Principal approves complaint and marks it as resolved
+    """
+
+    complaint = get_object_or_404(Complaint, id=id)
+
+    # change status
+    complaint.status = "resolved"
     complaint.save()
 
     return redirect("principal_complaints")
@@ -436,3 +466,13 @@ def hod_homepage(request):
 @login_required
 def hod_profile(request):
     return render(request,"hod_profile.html")
+
+@login_required
+@role_required("hod")
+def hod_complaints(request):
+
+    complaints = Complaint.objects.filter(status="tutor_approved")
+
+    return render(request,"hod_complaints.html",{
+        "complaints":complaints
+    })

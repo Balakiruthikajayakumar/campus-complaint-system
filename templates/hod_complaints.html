@@ -1,31 +1,67 @@
-<div class="hod-complaints-container">
-    <h2>📋 HOD  Complaints</h2>
+{% load static %}
 
-    {% if complaints %}
-    <table class="complaints-table">
-        <thead>
-            <tr>
-                <th style="width: 15%;">Title</th>
-                <th style="width: 55%;">Description</th>
-                <th style="width: 15%;">Status</th>
-                <th style="width: 15%;">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for complaint in complaints %}
-            <tr>
-                <td>{{ complaint.title }}</td>
-                <td class="description">{{ complaint.description }}</td>
-                <td class="status">{{ complaint.status|capfirst }}</td>
-                <td>
-                    <a href="{% url 'approve_hod' complaint.id %}" class="btn resolve-btn">Accept</a>
-                    <a href="{% url 'reject_hod' complaint.id %}" class="btn reject-btn">Reject</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-        <p class="no-complaints">No complaints to display.</p>
-    {% endif %}
+<link rel="stylesheet" href="{% static 'css/hod_complaints.css' %}">
+
+<div class="hod-complaints-container">
+
+<h2>📋 HOD Complaints</h2>
+
+{% if complaints %}
+
+<table class="complaints-table">
+
+<thead>
+<tr>
+<th>Student</th>
+<th>Title</th>
+<th>Description</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for complaint in complaints %}
+
+<tr>
+
+<td>{{ complaint.student.username }}</td>
+
+<td>{{ complaint.title }}</td>
+
+<td>{{ complaint.description }}</td>
+
+<td>{{ complaint.status|capfirst }}</td>
+
+<td>
+
+<!-- Approve Button -->
+
+<a href="{% url 'approve_hod' complaint.id %}" class="btn resolve-btn">
+Approve
+</a>
+
+<!-- Reject Button -->
+
+<a href="{% url 'reject_hod' complaint.id %}" class="btn reject-btn">
+Reject
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% else %}
+
+<p>No complaints available.</p>
+
+{% endif %}
+
 </div>
